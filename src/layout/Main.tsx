@@ -8,10 +8,10 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     toolbar: theme.mixins.toolbar,
     content: {
-      marginTop: '64px',
+      // marginTop: '64px',
       flexGrow: 1,
       backgroundColor: theme.palette.background.default,
-      padding: theme.spacing(3),
+      // padding: theme.spacing(3),
       paddingBottom:'65px',
     },
     logo: {
