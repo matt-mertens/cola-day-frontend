@@ -16,6 +16,9 @@ export const roomsApi = {
         async getRooms() {
             return (await roomsApiClient()).get('/rooms')
         },
+        async getAvailableRooms(startDate: string, endDate: string) {
+            return (await roomsApiClient()).get(`/rooms${startDate && endDate ? `?startDate=${startDate}&endDate=${endDate}` : ''}`)
+        },
         async getRoomById(id: string) {
             return (await roomsApiClient()).get(`/rooms/${id}`)
         },

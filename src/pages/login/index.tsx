@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Card, Container, Typography, Button } from '@material-ui/core/';
@@ -8,14 +8,15 @@ import { authApi } from '../../services/auth';
 
 const useStyles = makeStyles((theme) => ({
     card: {
-      marginTop: theme.spacing(4),
       padding: theme.spacing(2),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
+      zIndex: 10
     },
     title: {
-        margin: theme.spacing(1),  
+        margin: theme.spacing(1),
+        color: '#8898aa'
     },
     form: {
       width: '100%',
@@ -107,6 +108,9 @@ export default function Index(props: any) {
                     Login
                 </Button>
             </Card>
+            <Typography className={classes.title} variant="subtitle2">
+            Dont have an account? <Link to='/signup'>Signup</Link>
+            </Typography>
         </Container>
     )
 }

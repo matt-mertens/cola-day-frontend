@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from "react-router-dom";
 
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 
 import NavBar from './NavBar';
+import { authApi } from '../services/auth';
+import { createNull } from 'typescript';
+import { CircularProgress, Container } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,34 +28,47 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Main = (props: any) => {
     const classes = useStyles();
+    let history = useHistory();
 
-    const [themeMode, toggleThemeMode] = useState('light');
+    const [isLoadingAuthentication, setLoadingAuthentication] = useState<boolean>(false);
+    const [authenticatedUser, setAuthenticatedUser] = useState(null);
 
     useEffect(() => {
-      let theme = localStorage.getItem('theme')
+      let accessToken = localStorage.getItem('accessToken')
 
-      if (theme) {
-        toggleThemeMode(String(localStorage.getItem('theme')))
-      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        toggleThemeMode('dark')
+      if (accessToken) {
+        setLoadingAuthentication(true)
+        authApi.user.getAuthenticatedUser()
+        .then(res => {
+          let user = res.data;
+          setAuthenticatedUser(user)
+        })
+        .catch(error => {
+          console.log(error)
+          history.push('/login')
+        })
+        .finally(() => {
+          setLoadingAuthentication(false)
+        })
+      } else {
+        history.push('/login')
       }
-  
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-        toggleThemeMode(e.matches ? "dark" : "light")
-      });
 
-      return () => window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', e => {
-        toggleThemeMode(e.matches ? "dark" : "light")
-      })
     }, [])
 
-    let childrenInjectedWithProps = React.cloneElement(props.children)
+    let childrenInjectedWithProps = React.cloneElement(props.children, { authenticatedUser })
 
     return (
         <div>
-            <NavBar themeMode={themeMode} />
-            <main className={classes.content} >
-                {childrenInjectedWithProps}
+            <NavBar authenticatedUser={authenticatedUser} />
+            <main className={classes.content}>
+              {isLoadingAuthentication ? 
+                <Container style={{textAlign:'center', padding:'50px'}}>
+                    <CircularProgress />
+                </Container>
+              :
+                childrenInjectedWithProps
+              }
             </main>
         </div>
     )

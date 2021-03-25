@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Card, Container, Typography, Button } from '@material-ui/core/';
@@ -107,6 +107,9 @@ export default function Index() {
                     Signup
                 </Button>
             </Card>
+            <Typography className={classes.title} variant="subtitle2">
+            Already have an account? <Link to='/login'>Login</Link>
+            </Typography>
         </Container>
     )
 }

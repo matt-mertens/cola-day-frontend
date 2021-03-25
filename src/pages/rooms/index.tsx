@@ -2,9 +2,24 @@ import React, { useEffect, useState } from 'react'
 import { roomsApi } from '../../services/rooms';
 import { Room } from '../../types/rooms';
 import RoomsCard from '../../components/RoomsCard';
-import { Typography } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+        paddingTop: theme.spacing(0),
+        padding: theme.spacing(5),
+        position: 'relative',
+    },
+    title: {
+        color: '#d3ffff',
+    }
+}));
 
 export default function Index() {
+    const classes = useStyles();
+
     const [rooms, setRooms] = useState<Room[] | null>(null)
     const [isLoadingRooms, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<Error | null>(null)
@@ -24,10 +39,21 @@ export default function Index() {
 
     return (
         <div>
-            <Typography variant='h4' gutterBottom>
-                Rooms
-            </Typography>
-           <RoomsCard rooms={rooms} isLoadingRooms={isLoadingRooms} />
+            <div className={classes.root}>
+                <div style={{display:'flex', justifyContent:'space-between'}}>
+                    <div>
+                        <Typography  className={classes.title} variant='h4' gutterBottom>
+                            Rooms
+                        </Typography>
+                    </div>
+                    <div style={{float:'right'}}>
+                        <Button variant="contained" color="primary">
+                            Add Room
+                        </Button>
+                    </div>
+                </div>
+                <RoomsCard rooms={rooms} isLoadingRooms={isLoadingRooms} />
+           </div>
         </div>
     )
 }

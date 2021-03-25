@@ -1,38 +1,30 @@
 import React from 'react';
-import { Typography, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
-import { Link } from 'react-router-dom';
-import ReservationsCard from '../../components/ReservationsCard';
+import ReservationsCard from '../../components/MyReservationsCard';
 import { useApiGetReservations } from '../../hooks/apiHooks';
 import { makeStyles } from '@material-ui/core/styles';
+import WelcomeCard from './WelcomeCard';
 
 const useStyles = makeStyles((theme) => ({
-    header: {
-      padding: theme.spacing(12),
-      position: 'relative',
-      background: 'linear-gradient(87deg,#11cdef,#1171ef)!important',
+    root: {
+        flexGrow: 1,
+        paddingTop: theme.spacing(0),
+        padding: theme.spacing(5),
+        position: 'relative',
     },
-    paper: {
-        padding: theme.spacing(2),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-      },
 }));
 
-export default function Index() {
+export default function Index(props: any) {
     const classes = useStyles();
     const { reservations, isLoadingReservations } = useApiGetReservations()
     
     return (
         <div>
-            <div 
-            className={classes.header}
-            >
-            </div>
-            <div>
-                <Grid container spacing={2}>
+            <div className={classes.root}>
+                <Grid container spacing={3}>
                     <Grid item xs={12} sm={12} md={7} lg={8}>
-                    TEST
+                        <WelcomeCard authenticatedUser={props.authenticatedUser} />
                     </Grid>
                     <Grid item xs={12} sm={12} md={5} lg={4}>
                         <ReservationsCard 
@@ -41,18 +33,6 @@ export default function Index() {
                         />
                     </Grid>
                 </Grid>
-                <Typography>
-                Home
-                </Typography>
-                <Link to='/rooms'>
-                Rooms
-                </Link>
-                <Link to='/reservations'>
-                Reservations
-                </Link>
-                <Link to='/login'>
-                Login
-                </Link>
             </div>
         </div>
     )

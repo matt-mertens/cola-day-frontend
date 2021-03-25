@@ -1,8 +1,13 @@
 import axios, { AxiosInstance } from 'axios';
 
 export const authApiClient = async (): Promise<AxiosInstance> => {
+    let accessToken = localStorage.getItem('accessToken')
+
     return axios.create({
         baseURL: `${process.env.REACT_APP_API_HOST}${process.env.REACT_APP_API_PREFIX}`,
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
     })
 }
 
@@ -16,8 +21,11 @@ export const authApi = {
         },
     },
     user: {
-        async getUser() {
+        async getAuthenticatedUser() {
             return (await authApiClient()).get('/auth/user/me')
+        },
+        async getUser(id: string) {
+            return (await authApiClient()).get(`/auth/user/${id}`)
         }
     }
 }
