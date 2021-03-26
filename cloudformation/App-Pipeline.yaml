@@ -1,0 +1,131 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: App Cloudformation Template
+Outputs:
+  PipelineWebhookURL:
+    Description: Url to send Github webook triggers to
+    Value: !Join
+      - ''
+      - - ''
+        - !Join
+          - ''
+          - - 'Pipeline Webhook URL: '
+            - !GetAtt 'GithubWebhook.Url'
+Parameters:
+  DeployStackName:
+    Default: ColaDay-App-Pipeline
+    Description: This should be the name of the deployment stack
+    Type: String
+  GitHubBranch:
+    Default: main
+    Description: This should be the branch you would like to build
+    Type: String
+  GitHubOAuthToken:
+    Description: This should be a generated OAuth Token from Github
+    Type: String
+  GitHubOwner:
+    Default: matmertz25
+    Description: This should be the Github username owner of the repo
+    Type: String
+  GitHubRepo:
+    Default: cola-day-frontend
+    Description: This should be a repository owned by the entered owner
+    Type: String
+Resources:
+  GithubWebhook:
+    Properties:
+      Authentication: GITHUB_HMAC
+      AuthenticationConfiguration:
+        SecretToken: ColaDay
+      Filters:
+        - JsonPath: $.ref
+          MatchEquals: refs/heads/{Branch}
+      RegisterWithThirdParty: 'true'
+      TargetAction: SourceAction
+      TargetPipeline: !Ref 'ColaDayAppPipeline'
+      TargetPipelineVersion: '1'
+    Type: AWS::CodePipeline::Webhook
+  ColaDayAppPipeline:
+    Properties:
+      ArtifactStore:
+        Location: matthewmertens.com
+        Type: S3
+      DisableInboundStageTransitions:
+        - Reason: Disabling the transition until integration tests are completed
+          StageName: Deploy
+      RestartExecutionOnUpdate: 'true'
+      RoleArn: '{{resolve:ssm:RealtyStack-pipeline-service-role:1}}'
+      Stages:
+        - Actions:
+            - ActionTypeId:
+                Category: Source
+                Owner: ThirdParty
+                Provider: GitHub
+                Version: '1'
+              Configuration:
+                Branch: !Ref 'GitHubBranch'
+                OAuthToken: !Ref 'GitHubOAuthToken'
+                Owner: !Ref 'GitHubOwner'
+                PollForSourceChanges: false
+                Repo: !Ref 'GitHubRepo'
+              Name: SourceAction
+              OutputArtifacts:
+                - Name: SourceOutput
+              RunOrder: '1'
+          Name: Source
+        - Actions:
+            - ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: '1'
+              Configuration:
+                ProjectName: !Ref 'ColaDayAppProject'
+              InputArtifacts:
+                - Name: SourceOutput
+              Name: BuildAction
+              OutputArtifacts:
+                - Name: BuildOutput
+              RunOrder: '2'
+          Name: Build
+        - Actions:
+            - ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: S3
+                Version: '1'
+              Configuration:
+                BucketName: matthewmertens.com
+                Extract: true
+              InputArtifacts:
+                - Name: BuildOutput
+              Name: PushStaticFilesToS3
+              RunOrder: 1
+          Name: Deploy
+    Type: AWS::CodePipeline::Pipeline
+  ColaDayAppProject:
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Cache:
+        Modes:
+          - LOCAL_SOURCE_CACHE
+        Type: LOCAL
+      Description: ColaDay App pipeline build project
+      Environment:
+        ComputeType: BUILD_GENERAL1_MEDIUM
+        EnvironmentVariables:
+          - Name: S3_Bucket
+            Type: PLAINTEXT
+            Value: matthewmertens.com
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:2.0
+        PrivilegedMode: 'false'
+        Type: LINUX_CONTAINER
+      LogsConfig:
+        CloudWatchLogs:
+          Status: ENABLED
+      Name: ColaDay-App-Project
+      ServiceRole: '{{resolve:ssm:RealtyStack-build-service-role:1}}'
+      Source:
+        Type: CODEPIPELINE
+      TimeoutInMinutes: 30
+    Type: AWS::CodeBuild::Project
