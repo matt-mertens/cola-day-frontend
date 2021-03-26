@@ -19,7 +19,17 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'space-between'
     },
     logo: {
-      height: '40px'
+      height: '40px',
+      borderRadius: '50%',
+      background:'linear-gradient(87deg,#f5365c 0,#f56036 100%)!important'
+    },
+    profile: {
+      color: '#d3ffff',
+      marginLeft: '8px'
+    },
+    avatar: {
+      background: '#172b4d',
+      color:' #fff'
     }
   }),
 );
@@ -55,8 +65,8 @@ export default function NavBar(props: any) {
           </Link>
           <div style={{display:'flex'}}>
             <Button onClick={handleClick}>
-              <Avatar>{props.authenticatedUser ? props.authenticatedUser.email.charAt(0) : ''}</Avatar>
-              <div style={{paddingTop:'10px', marginLeft: '8px'}}>{props.authenticatedUser?.email}</div>
+              <Avatar className={classes.avatar}>{props.authenticatedUser ? props.authenticatedUser.email.charAt(0) : ''}</Avatar>
+              <div className={classes.profile}>{props.authenticatedUser?.email}</div>
             </Button>
               <Menu
               style={{marginTop:'35px'}}

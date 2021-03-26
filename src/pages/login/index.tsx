@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory } from "react-router-dom";
 
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Card, Container, Typography, Button } from '@material-ui/core/';
+import { TextField, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Card, Container, Typography, Button, CircularProgress } from '@material-ui/core/';
 import { Visibility, VisibilityOff } from '@material-ui/icons/';
 import { authApi } from '../../services/auth';
 
@@ -18,12 +18,17 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1),
         color: '#8898aa'
     },
+    subtitle: {
+        margin: theme.spacing(2),
+        color: '#8898aa'
+    },
     form: {
       width: '100%',
       marginTop: theme.spacing(1),
     },
     submitButton: {
         marginTop: theme.spacing(1),
+        background: 'linear-gradient(87deg,#f5365c 0,#f56036 100%)!important'
     },
 }));
 
@@ -56,6 +61,11 @@ export default function Index(props: any) {
 
     return (
         <Container component="div" maxWidth="xs">
+            {isAuthLoading ?
+                <Container style={{textAlign:'center', padding:'50px'}}>
+                    <CircularProgress />
+                </Container>
+            :
             <Card className={classes.card}>
                 <Typography className={classes.title} component="h2" variant="h5">
                 Login
@@ -104,11 +114,12 @@ export default function Index(props: any) {
                 color="primary"
                 className={classes.submitButton}
                 onClick={handleSubmit}
+                size='large'
                 >
                     Login
                 </Button>
-            </Card>
-            <Typography className={classes.title} variant="subtitle2">
+            </Card>}
+            <Typography className={classes.subtitle} variant="subtitle2">
             Dont have an account? <Link to='/signup'>Signup</Link>
             </Typography>
         </Container>

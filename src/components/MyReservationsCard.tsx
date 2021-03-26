@@ -35,7 +35,7 @@ export default function ReservationsCard(props: IProps) {
                     </Typography>
                 </div>
                 <div>
-                    <Link to='/reservations' style={{textDecoration:'none'}}>
+                    <Link to='/reservations/create' style={{textDecoration:'none'}}>
                         <Button 
                         variant='outlined' 
                         color='primary'
@@ -81,6 +81,9 @@ export default function ReservationsCard(props: IProps) {
                             </ListItemSecondaryAction>
                         </ListItem>
                     ))}
+                    <Link to='/reservations'>
+                        <Button style={{marginTop:'15px'}} size='small' fullWidth variant='outlined'>View all</Button>
+                    </Link>
                 </List>
             }
         </Card>

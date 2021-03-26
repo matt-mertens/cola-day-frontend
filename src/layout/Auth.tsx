@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import { Container, Grid } from '@material-ui/core';
+import { Avatar, Container, Grid } from '@material-ui/core';
+import colaLogo from '../assets/cola-logo-light.png'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -13,21 +14,21 @@ const useStyles = makeStyles((theme: Theme) =>
     header: {
       paddingTop: theme.spacing(7),
       paddingBottom: theme.spacing(14),
-      background: 'linear-gradient(87deg, #2dce89, #2dcecc)',
+      background: 'linear-gradient(87deg,#1171ef,#11cdef)!important', //'linear-gradient(87deg, #2dce89, #2dcecc)',
     },
     title: {
       justifyContent: 'center',
       color: '#fff',
-      paddingTop: theme.spacing(3),
-      paddingBottom: theme.spacing(3),
+      // paddingTop: theme.spacing(3),
+      paddingBottom: theme.spacing(1),
     },
     logo: {
-      height: '20px',
-      marginRight: '7px',
+      height: '50px',
+      borderRadius: '50%',
+      background:'linear-gradient(87deg,#f5365c 0,#f56036 100%)!important'
     },
     separator: {
       height: '70px',
-      // bottom: 0,
       top: 'auto',
       paddingTop: theme.spacing(7),
       position: 'absolute',
@@ -40,8 +41,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     component: {
       position: 'relative',
-      marginTop: theme.spacing(-8)
-    }
+      marginTop: theme.spacing(-10)
+    },
   }),
 );
 
@@ -61,14 +62,13 @@ const Auth = (props: any) => {
             <main className={classes.content}>
             <div className={classes.header}>
               <Container>
-                <div className="header-body text-center mb-7">
+                  <img src={colaLogo} className={classes.logo} />
                   <Grid className={classes.title}>
                       <h1 className="text-white">Welcome to Cola Day!</h1>
                       <p className="text-lead text-light">
                         Reserve your room for Cola Day.
                       </p>
                   </Grid>
-                </div>
               </Container>
               <div className={classes.separator}>
                 <svg

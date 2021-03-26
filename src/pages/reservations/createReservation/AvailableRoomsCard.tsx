@@ -4,6 +4,8 @@ import { Room } from '../types/rooms';
 import { makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
+import { LocationOn } from '@material-ui/icons';
+import CreateReservationModal from './CreateReservationModal';
 
 interface IProps {
     availableRooms: Room[] | null,
@@ -35,15 +37,6 @@ export default function AvailableRoomsCard(props: IProps) {
                     </Typography>
                 </div>
                 <div>
-                    {/* <Link to='/reservations'>
-                        <Button 
-                        variant='outlined' 
-                        color='primary'
-                        size='small'
-                        >
-                            Reservation
-                        </Button>
-                    </Link> */}
                 </div>
             </div>
             {props.isLoadingAvailableRooms ?
@@ -66,9 +59,16 @@ export default function AvailableRoomsCard(props: IProps) {
                 <List component="div">
                     {props.availableRooms.map(item => (
                         <div>
-                        <ListItem item>
+                        <ListItem>
                             <ListItemText 
-                            primary={item.name} 
+                            primary={
+                                <Typography
+                                variant="subtitle1"
+                                color="textPrimary"
+                                >
+                                    {item.name}
+                                </Typography>
+                            } 
                             secondary={
                                 <React.Fragment>
                                     <Typography
@@ -76,25 +76,21 @@ export default function AvailableRoomsCard(props: IProps) {
                                     variant="body2"
                                     color="textPrimary"
                                     >
-                                        {item.description}
+                                        <LocationOn />{item.location}
+                                    </Typography>
+                                    <Typography
+                                    variant="overline"
+                                    >
+                                        Capacity: {item.capacity} | Floor {item.floor}
                                     </Typography>
                                 </React.Fragment>
                             } 
                             />
-                            <div style={{paddingLeft:'15px',paddingRight:'15px'}}>
-                                <p>Capacity</p>
-                                <span>{item.capacity}</span>
-                            </div>
-                            <div style={{paddingLeft:'15px',paddingRight:'15px'}}>
-                                <p>Location</p>
-                                <span>{item.location}</span>
-                            </div>
-                            <div style={{paddingLeft:'15px',paddingRight:'35px'}}>
-                                <p>Floor</p>
-                                <span>{item.floor}</span>
-                            </div>
+                            {/* <div style={{paddingLeft:'15px',paddingRight:'15px'}}>
+                                <span><LocationOn />{item.location}</span>
+                            </div> */}
                             <ListItemSecondaryAction>
-                                <Button variant='outlined' color='primary'>Book</Button>
+                                <CreateReservationModal room={item} selectedAppointment={props.selectedAppointment}/>
                             </ListItemSecondaryAction>
                         </ListItem>
                         <Divider/>

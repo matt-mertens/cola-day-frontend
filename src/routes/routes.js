@@ -12,6 +12,7 @@ import Login from '../pages/login/index';
 import Signup from '../pages/signup/index';
 import Home from '../pages/home/index';
 import Rooms from '../pages/rooms/index';
+import CreateReservation from '../pages/reservations/createReservation/index';
 import Reservations from '../pages/reservations/index';
 
 
@@ -22,6 +23,7 @@ const BaseRouter = (props: any) => (
         <AppRoute exact path='/' layout={Main} component={Home}/>
         <AppRoute exact path='/rooms' layout={Main} component={Rooms}/>
         <AppRoute exact path='/reservations' layout={Main} component={Reservations}/>
+        <AppRoute exact path='/reservations/create' layout={Main} component={CreateReservation}/>
     </Switch>
 );
 

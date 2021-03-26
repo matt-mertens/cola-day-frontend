@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { roomsApi } from '../../services/rooms';
 import { Room } from '../../types/rooms';
 import RoomsCard from '../../components/RoomsCard';
-import { Button, Typography } from '@material-ui/core';
+import { Button, CircularProgress, Container, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,6 +25,7 @@ export default function Index() {
     const [error, setError] = useState<Error | null>(null)
 
     useEffect(() => {
+        setLoading(true)
         roomsApi.rooms.getRooms()
         .then(res => {
             setRooms(res.data)
@@ -52,7 +53,13 @@ export default function Index() {
                         </Button>
                     </div>
                 </div>
+                {isLoadingRooms ? 
+                    <Container style={{textAlign:'center', padding:'50px'}}>
+                        <CircularProgress />
+                    </Container>
+                :
                 <RoomsCard rooms={rooms} isLoadingRooms={isLoadingRooms} />
+                }
            </div>
         </div>
     )

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, List, ListItem, ListItemText, ListItemSecondaryAction, Typography } from '@material-ui/core';
+import { Card, List, ListItem, ListItemText, ListItemSecondaryAction, Typography, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 
@@ -24,6 +24,8 @@ export default function WelcomeCard(props: any) {
             <Typography variant="subtitle2" gutterBottom>
             {moment().format('MMM Do YYYY')}
             </Typography>
+            <Divider style={{marginTop:'20px'}} />
+            <p>We are glad you could join us for Cola day! To get started reserve a room to meet with one of the Coke or Pepsi teams</p>
         </Card>
     )
 }

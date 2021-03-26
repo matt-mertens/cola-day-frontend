@@ -2,20 +2,24 @@ import React, { useState } from 'react';
 import { Link, useHistory } from "react-router-dom";
 
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Card, Container, Typography, Button } from '@material-ui/core/';
+import { TextField, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Card, Container, Typography, Button, CircularProgress } from '@material-ui/core/';
 import { Visibility, VisibilityOff } from '@material-ui/icons/';
 import { authApi } from '../../services/auth';
 
 const useStyles = makeStyles((theme) => ({
     card: {
-      marginTop: theme.spacing(4),
       padding: theme.spacing(2),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
     },
     title: {
-        margin: theme.spacing(1),  
+        margin: theme.spacing(1), 
+        color: '#8898aa',
+    },
+    subtitle: {
+        margin: theme.spacing(2), 
+        color: '#8898aa',
     },
     form: {
       width: '100%',
@@ -23,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
     submitButton: {
         marginTop: theme.spacing(1),
+        background: 'linear-gradient(87deg,#f5365c 0,#f56036 100%)!important'
     },
 }));
 
@@ -55,6 +60,11 @@ export default function Index() {
 
     return (
         <Container component="div" maxWidth="xs">
+            {isAuthLoading ?
+                <Container style={{textAlign:'center', padding:'50px'}}>
+                    <CircularProgress />
+                </Container>
+            :
             <Card className={classes.card}>
                 <Typography className={classes.title} component="h2" variant="h5">
                 Signup
@@ -103,11 +113,12 @@ export default function Index() {
                 color="primary"
                 className={classes.submitButton}
                 onClick={handleSubmit}
+                size='large'
                 >
                     Signup
                 </Button>
-            </Card>
-            <Typography className={classes.title} variant="subtitle2">
+            </Card>}
+            <Typography className={classes.subtitle} variant="subtitle2">
             Already have an account? <Link to='/login'>Login</Link>
             </Typography>
         </Container>
