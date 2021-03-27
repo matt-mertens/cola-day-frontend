@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Typography, Container, CircularProgress, TextField } from '@material-ui/core'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Typography, Container, CircularProgress, TextField, Snackbar, IconButton } from '@material-ui/core'
 import moment from 'moment';
-import { LocationOn } from '@material-ui/icons';
+import { LocationOn, Close } from '@material-ui/icons';
 import { reservationApi } from '../../../services/reservations';
 import { useHistory } from 'react-router';
 
@@ -10,6 +10,7 @@ export default function CreateReservationModal(props: any) {
     const [creatingReservation, setCreatingReservation] = useState<boolean>(false);
     const [reservationTitle, setReservationTitle] = useState('');
     const [reservationDescription, setReservationDescription] = useState('');
+    const [error, setError] = useState<Error | null>(null)
 
     const { room, selectedAppointment } = props;
 
@@ -36,7 +37,12 @@ export default function CreateReservationModal(props: any) {
             history.push('/reservations')
         })
         .catch(error => {
-            console.log(error)
+            const { data } = error.response;
+            if (data.statusCode === 403) {
+                setError(data.message)
+            } else {
+                setError('Invalid request')
+            }
         })
         .finally(() => {
             setCreatingReservation(false)
@@ -47,6 +53,23 @@ export default function CreateReservationModal(props: any) {
 
     return (
         <div>
+            {/* <Snackbar
+            anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+            }}
+            open={error ? true : false}
+            autoHideDuration={3000}
+            onClose={handleClose}
+            message={error}
+            action={
+            <React.Fragment>
+                <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+                <Close fontSize="small" />
+                </IconButton>
+            </React.Fragment>
+            }
+            /> */}
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                 Reserve
             </Button>

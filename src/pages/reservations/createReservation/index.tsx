@@ -80,11 +80,6 @@ export default function Index() {
     useEffect(() => {
       if(selectedAppointment?.startDate && selectedAppointment?.endDate) {
         setLoading(true)
-        console.log(`now ${moment(selectedAppointment?.startDate).format()}`)
-        console.log(`now ${moment(selectedAppointment?.startDate).utcOffset()}`)
-        console.log(`now ${moment.utc(selectedAppointment?.startDate).utcOffset(moment(selectedAppointment?.startDate).utcOffset())}`)
-        console.log(`now ${moment.utc(selectedAppointment?.startDate).format()}`)
-        console.log(`now ${moment.utc(selectedAppointment?.startDate).subtract(4, 'hours').format()}`)
 
         roomsApi.rooms.getAvailableRooms(moment(selectedAppointment.startDate).format('YYYY-MM-DDTHH:mm:ss.SSS'), moment(selectedAppointment.endDate).format('YYYY-MM-DDTHH:mm:ss'))
         .then(res => {
