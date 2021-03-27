@@ -48,6 +48,7 @@ export default function CreateRoomModal(props: any) {
         })
         .then(res => {
             history.push('/rooms')
+            window.location.reload()
         })
         .catch(error => {
             console.log(error)

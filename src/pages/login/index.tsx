@@ -68,6 +68,8 @@ export default function Index(props: any) {
                     const { data } = error.response;
                     if (data.statusCode === 401) {
                         setErrorMessage(data.message)
+                    } else {
+                        setErrorMessage('Invalid credentials')
                     }
                 } else if (error.request) {
                 // client never received a response, or request never left

@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingBottom: theme.spacing(1),
     },
     logo: {
-      height: '50px',
+      height: '60px',
       borderRadius: '50%',
       background:'linear-gradient(87deg,#f5365c 0,#f56036 100%)!important'
     },

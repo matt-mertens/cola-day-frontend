@@ -15,10 +15,10 @@ export default function WelcomeCard(props: any) {
 
     return (
         <Card className={classes.card}>
-            <Typography variant='div'>
+            <Typography variant='h5'>
                 Welcome to Cola Day!
             </Typography>
-            <Typography variant='h6'>
+            <Typography variant='body1'>
                {props.authenticatedUser?.email}
             </Typography>
             <Typography variant="subtitle2" gutterBottom>
