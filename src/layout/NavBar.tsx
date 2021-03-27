@@ -83,13 +83,13 @@ export default function NavBar(props: any) {
               }}
               onClose={handleClose}
             >
-              <MenuItem
+              {/* <MenuItem
               style={{minWidth:'200px'}}
               >
                 Profile
               </MenuItem>
-              <Divider />
-              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              <Divider /> */}
+              <MenuItem style={{minWidth:'200px'}} onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </div>
         </Toolbar>

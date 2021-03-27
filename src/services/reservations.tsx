@@ -21,6 +21,9 @@ export const reservationApi = {
         },
         async createReservation(payload: any) {
             return (await reservationsApiClient()).post('/reservations', payload)
+        },
+        async deleteReservation(id: number) {
+            return (await reservationsApiClient()).delete(`/reservations/${id}`)
         }
     }
 }

@@ -51,6 +51,14 @@ export default function Header() {
                     </Button>
                 </Link>
 
+                <Link to='/reservations' className={classes.link}>
+                    <Button className={window.location.pathname === '/reservations' ? classes.navItemActive : ''}>
+                        <Typography  className={classes.nav}>
+                            Reservations
+                        </Typography>
+                    </Button>
+                </Link>
+                
                 <Link to='/rooms' className={classes.link}>
                     <Button className={window.location.pathname === '/rooms' ? classes.navItemActive : ''}>
                         <Typography className={classes.nav}>
@@ -59,10 +67,10 @@ export default function Header() {
                     </Button>
                 </Link>
 
-                <Link to='/reservations' className={classes.link}>
-                    <Button className={window.location.pathname === '/reservations' ? classes.navItemActive : ''}>
-                        <Typography  className={classes.nav}>
-                            Reservations
+                <Link to='/about' className={classes.link}>
+                    <Button className={window.location.pathname === '/about' ? classes.navItemActive : ''}>
+                        <Typography className={classes.nav}>
+                            About
                         </Typography>
                     </Button>
                 </Link>

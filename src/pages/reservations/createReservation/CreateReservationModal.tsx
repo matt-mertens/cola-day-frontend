@@ -28,8 +28,8 @@ export default function CreateReservationModal(props: any) {
         reservationApi.reservations.createReservation({
             title: reservationTitle,
             description: reservationDescription,
-            startDate: moment.utc(selectedAppointment.startDate),
-            endDate: moment.utc(selectedAppointment.endDate),
+            startDate: moment(selectedAppointment.startDate),
+            endDate: moment(selectedAppointment.endDate),
             room: room.id,
         })
         .then(res => {
@@ -69,22 +69,29 @@ export default function CreateReservationModal(props: any) {
                         <div>Reserve {room.name}</div>
                         <div>{moment(selectedAppointment.startDate).format('MMM Do YYYY')}, {moment(selectedAppointment.startDate).format('hh mma')} - {moment(selectedAppointment.endDate).format('hh mma')}</div>
                     </Typography>
-                    <Typography variant="subtitle2" gutterBottom>
+                    <Typography variant="subtitle2">
                         {room.description}
                     </Typography>
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
+                    <DialogContentText>
                         <Typography
                         component="div"
                         variant="body2"
                         color="textPrimary"
                         >
-                            <LocationOn />{room.location}
+                            <LocationOn style={{fontSize:'15px'}} />
+                            <span style={{marginLeft:'7px'}}>{room.location}</span>
+                        </Typography>
+                        <Typography
+                        variant="overline"
+                        >
+                            Capacity {room.capacity} | Floor {room.floor}
                         </Typography>
                         <form noValidate autoComplete="off">
                             <TextField 
                             label="Title" 
+                            placeholder='Meeting title'
                             fullWidth 
                             onChange={(e) => setReservationTitle(e.target.value)}
                             style={{marginBottom:'10px'}} 

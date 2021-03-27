@@ -5,4 +5,5 @@ export interface Room {
     capacity: number;
     floor: string;
     location: string;
+    owner: string;
 }

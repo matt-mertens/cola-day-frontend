@@ -20,6 +20,7 @@ Parameters:
     Description: This should be the branch you would like to build
     Type: String
   GitHubOAuthToken:
+    Default: '{{resolve:ssm:Github-OAuthToken-matmertz25:1}}'
     Description: This should be a generated OAuth Token from Github
     Type: String
   GitHubOwner:

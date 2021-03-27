@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Link, useHistory } from "react-router-dom";
 
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Card, Container, Typography, Button, CircularProgress } from '@material-ui/core/';
-import { Visibility, VisibilityOff } from '@material-ui/icons/';
+import { TextField, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Card, Container, Typography, Button, CircularProgress, Snackbar } from '@material-ui/core/';
+import { Visibility, VisibilityOff, Close } from '@material-ui/icons/';
 import { authApi } from '../../services/auth';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,8 +39,19 @@ export default function Index() {
     const [email, setEmail] = useState<string | null>('')
     const [password, setPassword] = useState<string | null>('')
     const [passwordVisible, togglePasswordVisibility] = useState<boolean>(false)
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-    const handleSubmit = () => {
+    const handleClose = (e: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setErrorMessage(null);
+    };
+
+    const handleSubmit = (e: React.SyntheticEvent | React.MouseEvent) => {
+        e.preventDefault();
+
         if (email && password) {
             setAuthLoading(true)
             authApi.auth.signUp(email, password)
@@ -51,6 +62,19 @@ export default function Index() {
             })
             .catch(error => {
                 console.log(error)
+                if (error.response) {
+                    // client received an error response (5xx, 4xx)
+                    const { data } = error.response;
+                    if (data.statusCode === 409) {
+                        setErrorMessage(data.message)
+                    }
+                } else if (error.request) {
+                // client never received a response, or request never left
+                console.log(error.request)
+
+                } else {
+                // anything else
+                }
             })
             .finally(() => {
                 setAuthLoading(false)
@@ -66,6 +90,23 @@ export default function Index() {
                 </Container>
             :
             <Card className={classes.card}>
+                <Snackbar
+                    anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                    }}
+                    open={errorMessage ? true : false}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    message={errorMessage}
+                    action={
+                    <React.Fragment>
+                        <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+                        <Close fontSize="small" />
+                        </IconButton>
+                    </React.Fragment>
+                    }
+                />
                 <Typography className={classes.title} component="h2" variant="h5">
                 Signup
                 </Typography>
@@ -105,18 +146,18 @@ export default function Index() {
                         labelWidth={70}
                         />
                     </FormControl>
+                    <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submitButton}
+                    onClick={handleSubmit}
+                    size='large'
+                    >
+                        Signup
+                    </Button>
                 </form>
-                <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submitButton}
-                onClick={handleSubmit}
-                size='large'
-                >
-                    Signup
-                </Button>
             </Card>}
             <Typography className={classes.subtitle} variant="subtitle2">
             Already have an account? <Link to='/login'>Login</Link>

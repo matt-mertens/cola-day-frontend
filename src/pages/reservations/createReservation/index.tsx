@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Container, CircularProgress, Typography, Grid, Card } from '@material-ui/core';
-import { useApiGetReservations } from '../../../hooks/apiHooks';
+import { Typography, Grid, Card } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { AppointmentModel, ViewState } from '@devexpress/dx-react-scheduler';
@@ -33,8 +32,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Index() {
     const classes = useStyles();
 
-    const { reservations, isLoadingReservations } = useApiGetReservations()
-
     const [selectedAppointment, setSelectedAppointment] = useState(null)
     const [availableAppointments, setAvailableAppointments] = useState<AppointmentModel[]>([])
     const [rooms, setRooms] = useState<Room[] | null>(null)
@@ -53,22 +50,21 @@ export default function Index() {
           }}
           onClick={() => setSelectedAppointment({ id: data.id, startDate: data.startDate, endDate: data.endDate })}
         >
-          <h5 style={{marginBottom:'2px', marginTop:'5px', marginLeft:'5px'}}>{data.title}</h5>
-          <span style={{marginLeft:'5px'}}>{moment(data.startDate).format('hh mma')} - {moment(data.endDate).format('hh mma')}</span>
+          <h5 style={{marginBottom:'2px', marginTop:'5px', marginLeft:'5px'}}>{moment(data.startDate).format('hh mma')} - {moment(data.endDate).format('hh mma')}</h5>
+          {/* <span style={{marginLeft:'5px'}}>{moment(data.startDate).format('hh mma')} - {moment(data.endDate).format('hh mma')}</span> */}
         </Appointments.Appointment>
     );
 
     useEffect(() => {
         setLoading(true)
-        roomsApi.rooms.getRooms()
+        roomsApi.rooms.getAvailableRooms(moment().startOf('day').hour(8).minute(0).format('YYYY-MM-DDTHH:mm:ss.SSS'), moment().startOf('day').hour(16).minute(0).format('YYYY-MM-DDTHH:mm:ss.SSS'), true)
         .then(res => {
-            const appointments = [...new Array(9)].map((item, idx) => ({
-                title: '5 Available Rooms',
-                description: '5 Available Rooms',
-                startDate: String(moment().startOf('day').hour(8 + idx).minute(0)),
-                endDate: String(moment().startOf('day').hour(9 + idx).minute(0)),
+            console.log(res.data)
+            const appointments = res.data.map((item, idx) => ({
+                title: `${item.availableRooms} Available Rooms`,
+                startDate: String(moment(item.startDate)),
+                endDate: String(moment(item.endDate)),
                 id: idx,
-                location: 'Room 1',
             }))
             setAvailableAppointments(appointments)
             console.log(appointments)
@@ -84,9 +80,16 @@ export default function Index() {
     useEffect(() => {
       if(selectedAppointment?.startDate && selectedAppointment?.endDate) {
         setLoading(true)
-        roomsApi.rooms.getAvailableRooms(moment(selectedAppointment.startDate).format(), moment(selectedAppointment.endDate).format())
+        console.log(`now ${moment(selectedAppointment?.startDate).format()}`)
+        console.log(`now ${moment(selectedAppointment?.startDate).utcOffset()}`)
+        console.log(`now ${moment.utc(selectedAppointment?.startDate).utcOffset(moment(selectedAppointment?.startDate).utcOffset())}`)
+        console.log(`now ${moment.utc(selectedAppointment?.startDate).format()}`)
+        console.log(`now ${moment.utc(selectedAppointment?.startDate).subtract(4, 'hours').format()}`)
+
+        roomsApi.rooms.getAvailableRooms(moment(selectedAppointment.startDate).format('YYYY-MM-DDTHH:mm:ss.SSS'), moment(selectedAppointment.endDate).format('YYYY-MM-DDTHH:mm:ss'))
         .then(res => {
-            setRooms(res.data)
+            let rooms = res.data.sort((a, b) => a.name - b.name)
+            setRooms(rooms)
         })
         .catch(error => {
             setError(error)
@@ -99,11 +102,6 @@ export default function Index() {
 
     return (
         <div className={classes.root}>
-            {isLoadingReservations ? 
-            <Container style={{textAlign:'center', padding:'50px'}}>
-                <CircularProgress />
-            </Container>
-            :
             <div>
               <Typography className={classes.title} variant='h4' gutterBottom>
                 New Reservation
@@ -138,7 +136,7 @@ export default function Index() {
                       </Card>
                     </Grid>
                 </Grid>
-            </div>}
+            </div>
         </div>
     )
 }

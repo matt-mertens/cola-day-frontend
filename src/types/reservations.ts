@@ -1,3 +1,5 @@
+import { Room } from "./rooms";
+
 export interface Reservation {
     id: string;
     title: string;
@@ -5,6 +7,7 @@ export interface Reservation {
     startDate: Date;
     endDate: Date;
     roomId: string;
+    room: Room;
     organizer: string;
     status: ReservationStatus;
 }

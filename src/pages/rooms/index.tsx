@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { roomsApi } from '../../services/rooms';
 import { Room } from '../../types/rooms';
-import RoomsCard from '../../components/RoomsCard';
+import RoomsCard from './RoomsCard';
 import { Button, CircularProgress, Container, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import CreateRoomModal from './CreateRoomModal';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Index() {
     const classes = useStyles();
 
-    const [rooms, setRooms] = useState<Room[] | null>(null)
+    const [rooms, setRooms] = useState<Room[]>([])
     const [isLoadingRooms, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<Error | null>(null)
 
@@ -48,9 +49,7 @@ export default function Index() {
                         </Typography>
                     </div>
                     <div style={{float:'right'}}>
-                        <Button variant="contained" color="primary">
-                            Add Room
-                        </Button>
+                        <CreateRoomModal />
                     </div>
                 </div>
                 {isLoadingRooms ? 

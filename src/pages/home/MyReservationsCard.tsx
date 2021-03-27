@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, List, ListItem, ListItemText, ListItemSecondaryAction, Typography, Container, CircularProgress, Button } from '@material-ui/core';
-import { Reservation } from '../types/reservations';
+import { Card, List, ListItem, ListItemText, ListItemSecondaryAction, Typography, Container, CircularProgress, Button, Divider } from '@material-ui/core';
+import { Reservation } from '../../types/reservations';
 import { makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
@@ -58,10 +58,11 @@ export default function ReservationsCard(props: IProps) {
             </Container>
             :
                 <List component="div">
-                    {props.reservations?.map(item => (
+                    {props.reservations?.slice(0, 5).map((item, idx) => (
+                    <React.Fragment>
                         <ListItem item>
                             <ListItemText 
-                            primary={item.title} 
+                            primary={<Link style={{textDecoration:'none'}} to={`/reservations/${item.id}`} >{item.title}</Link>} 
                             secondary={
                                 <React.Fragment>
                                     <Typography
@@ -76,10 +77,12 @@ export default function ReservationsCard(props: IProps) {
                             />
                             <ListItemSecondaryAction>
                                 <Typography variant="overline" display="block" gutterBottom>
-                                    {moment.utc(item.startDate).format('hh:mm a') + ' - ' + moment.utc(item.endDate).format('hh:mm a')}
+                                    {moment(item.startDate).format('hh:mm a') + ' - ' + moment(item.endDate).format('hh:mm a')}
                                 </Typography>
                             </ListItemSecondaryAction>
                         </ListItem>
+                        {props.reservations.length === (idx + 1)  ? null : <Divider />}
+                    </React.Fragment>
                     ))}
                     <Link to='/reservations'>
                         <Button style={{marginTop:'15px'}} size='small' fullWidth variant='outlined'>View all</Button>
