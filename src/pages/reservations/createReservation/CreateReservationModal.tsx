@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Typography, Container, CircularProgress, TextField } from '@material-ui/core'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Typography, Container, CircularProgress, TextField, Snackbar, IconButton } from '@material-ui/core'
 import moment from 'moment';
-import { LocationOn } from '@material-ui/icons';
+import { Close, LocationOn } from '@material-ui/icons';
 import { reservationApi } from '../../../services/reservations';
 import { useHistory } from 'react-router';
 
@@ -24,6 +24,10 @@ export default function CreateReservationModal(props: any) {
         setOpen(false);
     };
 
+    const handleCloseToast = () => {
+        setError(null);
+    };
+
     const handleSubmit = () => {
         setCreatingReservation(true)
         reservationApi.reservations.createReservation({
@@ -35,6 +39,7 @@ export default function CreateReservationModal(props: any) {
         })
         .then(res => {
             history.push('/reservations')
+            setOpen(false);
         })
         .catch(error => {
             const { data } = error.response;
@@ -47,29 +52,10 @@ export default function CreateReservationModal(props: any) {
         .finally(() => {
             setCreatingReservation(false)
         })
-
-        setOpen(false);
     };
 
     return (
         <div>
-            {/* <Snackbar
-            anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-            }}
-            open={error ? true : false}
-            autoHideDuration={3000}
-            onClose={handleClose}
-            message={error}
-            action={
-            <React.Fragment>
-                <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-                <Close fontSize="small" />
-                </IconButton>
-            </React.Fragment>
-            }
-            /> */}
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                 Reserve
             </Button>
@@ -81,6 +67,24 @@ export default function CreateReservationModal(props: any) {
             maxWidth={'md'}
             fullWidth
             >
+                <Snackbar
+                anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+                }}
+                open={error ? true : false}
+                style={{position:'fixed', top: 20, height: "100%" }}
+                autoHideDuration={3000}
+                onClose={handleCloseToast}
+                message={error}
+                action={
+                <React.Fragment>
+                    <IconButton size="small" aria-label="close" color="inherit" onClick={handleCloseToast}>
+                    <Close fontSize="small" />
+                    </IconButton>
+                </React.Fragment>
+                }
+                />
                 {creatingReservation ? 
                 <Container style={{textAlign:'center', padding:'50px'}}>
                     <CircularProgress />
