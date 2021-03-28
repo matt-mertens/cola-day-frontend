@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Typography, Container, CircularProgress, TextField, Select, MenuItem } from '@material-ui/core'
-import moment from 'moment';
-import { LocationOn } from '@material-ui/icons';
 import { roomsApi } from '../../services/rooms';
 import { useHistory } from 'react-router';
 
@@ -14,8 +12,6 @@ export default function CreateRoomModal(props: any) {
     const [roomCapacity, setRoomCapacity] = useState<number>('');
     const [roomFloor, setRoomFloor] = useState<string>('');
     const [roomLocation, setRoomLocation] = useState<string>('');
-
-    const { room, selectedAppointment } = props;
 
     const history = useHistory()
 
@@ -82,10 +78,8 @@ export default function CreateRoomModal(props: any) {
                 <DialogTitle>
                     <Typography variant='h5' style={{display:'flex', justifyContent:'space-between', width:'100%'}}>
                         <div>Add Room</div>
-                        {/* <div>{moment(selectedAppointment.startDate).format('MMM Do YYYY')}, {moment(selectedAppointment.startDate).format('hh mma')} - {moment(selectedAppointment.endDate).format('hh mma')}</div> */}
                     </Typography>
                     <Typography variant="subtitle2" gutterBottom>
-                        {/* {room.description} */}
                     </Typography>
                 </DialogTitle>
                 <DialogContent>
@@ -95,7 +89,6 @@ export default function CreateRoomModal(props: any) {
                         variant="body2"
                         color="textPrimary"
                         >
-                            {/* <LocationOn />{room.location} */}
                         </Typography>
                         <form noValidate autoComplete="off">
                             <TextField 
@@ -117,7 +110,6 @@ export default function CreateRoomModal(props: any) {
                             />
                             <Select
                             label='Owner'
-                            value={''}
                             fullWidth
                             variant="filled"
                             placeholder='Room owner'

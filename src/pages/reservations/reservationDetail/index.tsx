@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardActions, Chip, CircularProgress, Container, Typography, CardContent, Link } from '@material-ui/core'
+import { Card, CardActions, Chip, CircularProgress, Container, Typography, CardContent } from '@material-ui/core'
 import { LocationOn } from '@material-ui/icons'
 import { useApiGetReservationById } from '../../../hooks/apiHooks'
 import { makeStyles } from '@material-ui/core/styles';

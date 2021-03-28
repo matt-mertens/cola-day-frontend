@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Card, CardActionArea, CardActions, CardContent, CardHeader, Grid, IconButton, Typography } from '@material-ui/core';
+import { Avatar, Card, CardActionArea, CardContent, CardHeader, Grid, Typography } from '@material-ui/core';
 
 import ReservationsCard from './MyReservationsCard';
 import { useApiGetReservations } from '../../hooks/apiHooks';
@@ -40,9 +40,7 @@ export default function Index(props: any) {
                                         </Avatar>
                                         }
                                         action={
-                                        <IconButton aria-label="settings">
-                                            <CallMade />
-                                        </IconButton>
+                                        <CallMade style={{ margin: '12px', color: 'rgba(0, 0, 0, 0.54)'}}/>
                                         }
                                     />
                                     <CardContent>
@@ -66,9 +64,7 @@ export default function Index(props: any) {
                                         </Avatar>
                                         }
                                         action={
-                                        <IconButton aria-label="settings">
-                                            <CallMade/>
-                                        </IconButton>
+                                        <CallMade style={{ margin: '12px', color: 'rgba(0, 0, 0, 0.54)'}}/>
                                         }
                                     />
                                     <CardContent>

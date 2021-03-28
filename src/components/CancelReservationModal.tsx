@@ -5,7 +5,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { useApiCancelReservation } from '../hooks/apiHooks';
 import { reservationApi } from '../services/reservations';
 import { useHistory } from 'react-router';
 
@@ -13,7 +12,6 @@ export default function CancelReservationModal(props: any) {
   const [open, setOpen] = useState(false);
   const history = useHistory();
 
-  const [isDeleted, setDeleted] = useState<boolean>(false)
   const [isLoadingReservations, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<Error | null>(null)
 

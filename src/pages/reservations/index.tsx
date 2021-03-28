@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
       color: '#d3ffff',
   },
   cancelButton: {
-    //   background: 'linear-gradient(87deg,#f5365c 0,#f56036 100%)!important',
       textTransform: 'none'
   }
 }));
@@ -67,8 +66,8 @@ export default function Index() {
                     </Card>
                 :
                     <Grid container spacing={3} style={{marginTop:'7px'}}>
-                    {reservations?.map(item => (  
-                        <Grid item xs={12}>
+                    {reservations?.map((item, idx) => (  
+                        <Grid item xs={12} key={idx}>
                             <Card>
                                 <CardContent>
                                     <div style={{display:'flex', justifyContent:'space-between'}}>
@@ -98,7 +97,7 @@ export default function Index() {
                                     </div>
                                 </CardContent>
                                 <CardActions style={{padding: '16px'}}>
-                                    <Typography variant="body2" component="p">
+                                    <Typography variant="body2" component="div">
                                         <span style={{marginRight:'7px'}}>Room: {item.room.name}</span>
                                         <Chip 
                                         size="small" 

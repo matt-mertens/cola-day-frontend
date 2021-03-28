@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Avatar, Button, Menu, MenuItem, Divider } from '@material-ui/core/';
+import { AppBar, Toolbar, Avatar, Button, Menu, MenuItem } from '@material-ui/core/';
 import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import colaLogo from '../assets/cola-logo-light.png'
@@ -61,7 +61,7 @@ export default function NavBar(props: any) {
       >
         <Toolbar className={classes.toolbar}>
           <Link to='/'>
-            <img src={colaLogo} className={classes.logo} />
+            <img alt='coladay' src={colaLogo} className={classes.logo} />
           </Link>
           <div style={{display:'flex'}}>
             <Button onClick={handleClick}>
@@ -83,12 +83,6 @@ export default function NavBar(props: any) {
               }}
               onClose={handleClose}
             >
-              {/* <MenuItem
-              style={{minWidth:'200px'}}
-              >
-                Profile
-              </MenuItem>
-              <Divider /> */}
               <MenuItem style={{minWidth:'200px'}} onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </div>

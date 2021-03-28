@@ -51,7 +51,6 @@ export default function Index() {
           onClick={() => setSelectedAppointment({ id: data.id, startDate: data.startDate, endDate: data.endDate })}
         >
           <h5 style={{marginBottom:'2px', marginTop:'5px', marginLeft:'5px'}}>{moment(data.startDate).format('hh mma')} - {moment(data.endDate).format('hh mma')}</h5>
-          {/* <span style={{marginLeft:'5px'}}>{moment(data.startDate).format('hh mma')} - {moment(data.endDate).format('hh mma')}</span> */}
         </Appointments.Appointment>
     );
 
@@ -59,7 +58,6 @@ export default function Index() {
         setLoading(true)
         roomsApi.rooms.getAvailableRooms(moment().startOf('day').hour(8 + 4).minute(0).format('YYYY-MM-DDTHH:mm:ss.SSS'), moment().startOf('day').hour(16 +4).minute(0).format('YYYY-MM-DDTHH:mm:ss.SSS'), true)
         .then(res => {
-            console.log(res.data)
             const appointments = res.data.map((item, idx) => ({
                 title: `${item.availableRooms} Available Rooms`,
                 startDate: String(moment(item.startDate)),
@@ -67,7 +65,6 @@ export default function Index() {
                 id: idx,
             }))
             setAvailableAppointments(appointments)
-            console.log(appointments)
         })
         .catch(error => {
             setError(error)

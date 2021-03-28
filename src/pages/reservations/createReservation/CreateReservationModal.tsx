@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Typography, Container, CircularProgress, TextField, Snackbar, IconButton } from '@material-ui/core'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Typography, Container, CircularProgress, TextField } from '@material-ui/core'
 import moment from 'moment';
-import { LocationOn, Close } from '@material-ui/icons';
+import { LocationOn } from '@material-ui/icons';
 import { reservationApi } from '../../../services/reservations';
 import { useHistory } from 'react-router';
 
@@ -88,16 +88,15 @@ export default function CreateReservationModal(props: any) {
                 :
                 <div>
                 <DialogTitle>
-                    <Typography variant='h5' style={{display:'flex', justifyContent:'space-between', width:'100%'}}>
+                    <Typography component='div' variant='h5' style={{display:'flex', justifyContent:'space-between', width:'100%'}}>
                         <div>Reserve {room.name}</div>
                         <div>{moment(selectedAppointment.startDate).format('MMM Do YYYY')}, {moment(selectedAppointment.startDate).format('hh mma')} - {moment(selectedAppointment.endDate).format('hh mma')}</div>
                     </Typography>
-                    <Typography variant="subtitle2">
+                    <Typography component='div' variant="subtitle2">
                         {room.description}
                     </Typography>
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
                         <Typography
                         component="div"
                         variant="body2"
@@ -128,7 +127,6 @@ export default function CreateReservationModal(props: any) {
                             placeholder='Meeting Description'
                             />
                         </form>
-                    </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">

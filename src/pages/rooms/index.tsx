@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { roomsApi } from '../../services/rooms';
 import { Room } from '../../types/rooms';
 import RoomsCard from './RoomsCard';
-import { Button, CircularProgress, Container, Typography } from '@material-ui/core';
+import { CircularProgress, Container, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import CreateRoomModal from './CreateRoomModal';
 

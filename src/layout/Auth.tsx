@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import { Avatar, Container, Grid } from '@material-ui/core';
+import { Container, Grid } from '@material-ui/core';
 import colaLogo from '../assets/cola-logo-light.png'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       justifyContent: 'center',
       color: '#fff',
-      // paddingTop: theme.spacing(3),
       paddingBottom: theme.spacing(1),
     },
     logo: {
@@ -62,7 +61,7 @@ const Auth = (props: any) => {
             <main className={classes.content}>
             <div className={classes.header}>
               <Container>
-                  <img src={colaLogo} className={classes.logo} />
+                  <img alt='coladay' src={colaLogo} className={classes.logo} />
                   <Grid className={classes.title}>
                       <h1 className="text-white">Welcome to Cola Day!</h1>
                       <p className="text-lead text-light">

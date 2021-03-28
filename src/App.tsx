@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
 
@@ -33,39 +33,10 @@ const lightTheme = createMuiTheme({
   }
 });
 
-const darkTheme = createMuiTheme({
-  palette: {
-    type: "dark",
-    background: {
-      default: '#0d1117',
-      paper: '#161b22',
-    },
-    primary: {
-      main: '#dd7700',
-    },
-    secondary: {
-      main: '#1f2937',
-    },
-  },
-  typography: {
-    fontFamily: [
-      'Montserrat',
-      'Nunito',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif'
-    ].join(','),
-  }
-});
-
-
 function App() {
-  const [themeMode, toggleThemeMode] = useState('light');
-
   return (
     <div className="App">
-      <ThemeProvider theme={themeMode === 'light' ? lightTheme : darkTheme}>
+      <ThemeProvider theme={lightTheme}>
         <CssBaseline />
         <Router>
           <BaseRouter />

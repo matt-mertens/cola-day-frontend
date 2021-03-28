@@ -59,8 +59,8 @@ export default function ReservationsCard(props: IProps) {
             :
                 <List component="div">
                     {props.reservations?.slice(0, 5).map((item, idx) => (
-                    <React.Fragment>
-                        <ListItem item>
+                    <React.Fragment key={idx}>
+                        <ListItem key={idx}>
                             <ListItemText 
                             primary={<Link style={{textDecoration:'none'}} to={`/reservations/${item.id}`} >{item.title}</Link>} 
                             secondary={

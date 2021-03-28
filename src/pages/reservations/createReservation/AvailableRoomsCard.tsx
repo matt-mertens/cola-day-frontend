@@ -33,7 +33,7 @@ export default function AvailableRoomsCard(props: IProps) {
                     <Typography variant='h5'>
                         Available Rooms
                     </Typography>
-                    <Typography variant="subtitle2" gutterBottom>
+                    <Typography component='div' variant="subtitle2" gutterBottom>
                     {moment().format('MMM Do YYYY')}
                     </Typography>
                 </div>
@@ -55,7 +55,7 @@ export default function AvailableRoomsCard(props: IProps) {
                 Please select a time from the calendar to get availability
                 </Typography>
             </Container>
-            : props.availableRooms?.length === 0 || props.availableRooms.filter(item => item.owner.includes(roomType)).length == 0 ?
+            : props.availableRooms?.length === 0 || props.availableRooms.filter(item => item.owner.includes(roomType)).length === 0 ?
             <Container style={{textAlign:'center', padding:'50px'}}>
                 <Typography  variant="subtitle1" gutterBottom>
                 No rooms available for the specified time
@@ -64,11 +64,12 @@ export default function AvailableRoomsCard(props: IProps) {
             :
                 <List component="div">
                     {props.availableRooms.filter(item => item.owner.includes(roomType)).map((item, idx) => (
-                        <div>
+                        <div key={idx}>
                         <ListItem key={idx}>
                             <ListItemText 
                             primary={
                                 <Typography
+                                component='span'
                                 variant="subtitle1"
                                 color="textPrimary"
                                 >
@@ -84,6 +85,7 @@ export default function AvailableRoomsCard(props: IProps) {
                                 <React.Fragment>
                                     <div>
                                     <Typography
+                                    component="span"
                                     variant="overline"
                                     >
                                         Capacity {item.capacity} | Floor {item.floor}

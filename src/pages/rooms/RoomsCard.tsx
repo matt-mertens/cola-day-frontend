@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Typography, Container, Chip } from '@material-ui/core';
-import { Delete, LocationOn } from '@material-ui/icons';
+import { Card, List, ListItem, ListItemText, ListItemSecondaryAction, Typography, Container, Chip } from '@material-ui/core';
+import { LocationOn } from '@material-ui/icons';
 
 import { Room } from '../../types/rooms';
 
@@ -20,8 +20,8 @@ export default function RoomsCard(props: IProps) {
             </Container>
             :
             <List component="div">
-                {props.rooms.map(item => (
-                    <ListItem item>
+                {props.rooms.map((item, idx) => (
+                    <ListItem key={idx}>
                         <ListItemText 
                         primary={
                             <Typography
@@ -58,9 +58,6 @@ export default function RoomsCard(props: IProps) {
                         } 
                         />
                         <ListItemSecondaryAction>
-                            {/* <IconButton edge="end" aria-label="delete">
-                                <Delete />
-                            </IconButton> */}
                         </ListItemSecondaryAction>
                     </ListItem>
                 ))}
