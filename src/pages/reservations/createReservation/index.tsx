@@ -57,7 +57,7 @@ export default function Index() {
 
     useEffect(() => {
         setLoading(true)
-        roomsApi.rooms.getAvailableRooms(moment().startOf('day').hour(8).minute(0).format('YYYY-MM-DDTHH:mm:ss.SSS'), moment().startOf('day').hour(16).minute(0).format('YYYY-MM-DDTHH:mm:ss.SSS'), true)
+        roomsApi.rooms.getAvailableRooms(moment().startOf('day').hour(8 + 4).minute(0).format('YYYY-MM-DDTHH:mm:ss.SSS'), moment().startOf('day').hour(16 +4).minute(0).format('YYYY-MM-DDTHH:mm:ss.SSS'), true)
         .then(res => {
             console.log(res.data)
             const appointments = res.data.map((item, idx) => ({
@@ -81,7 +81,7 @@ export default function Index() {
       if(selectedAppointment?.startDate && selectedAppointment?.endDate) {
         setLoading(true)
 
-        roomsApi.rooms.getAvailableRooms(moment(selectedAppointment.startDate).format('YYYY-MM-DDTHH:mm:ss.SSS'), moment(selectedAppointment.endDate).format('YYYY-MM-DDTHH:mm:ss'))
+        roomsApi.rooms.getAvailableRooms(moment(selectedAppointment.startDate).add(4, 'hours').format('YYYY-MM-DDTHH:mm:ss.SSS'), moment(selectedAppointment.endDate).add(4, 'hours').format('YYYY-MM-DDTHH:mm:ss'))
         .then(res => {
             let rooms = res.data.sort((a, b) => a.name - b.name)
             setRooms(rooms)
