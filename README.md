@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+<p align="center">
+  <a href="https://matthewmertens.com" target="blank">
+    <img style="background: linear-gradient(87deg,#f5365c 0,#f56036 100%)!important; border-radius: 50%; height: 60px" src="https://matthewmertens.com/static/media/cola-logo-light.b123344a.png" alt="ColaDay Logo" />
+  </a>
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Cola Day
 
-## Available Scripts
+[ColaDay](https://matthewmertens.com)   
+[ColaDay Api Base Url](https://api.matthewmertens.com/api/)   
+[ColaDay Api Docs](https://api.matthewmertens.com/api/)   
 
-In the project directory, you can run:
+# Getting Started
+### Install dependencies
 
-### `npm start`
+`npm install`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Start Development Server
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+`npm run start`
 
-### `npm test`
+### Build Static Files
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+`npm run build`
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Users can see meeting rooms availability
+- Users can book meeting rooms by the hour (first come first served)
+- Users can cancel their own reservations
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Project Structure
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+├── src
+│   ├── assets (static assets)
+│   ├── components (reusable components)
+│   ├── hooks (reusable custom hooks)
+│   ├── layout (UI layout)
+│   ├── pages (App pages and specific components)
+│   ├── routes 
+│   ├── services (api clients)
+│   └── types (Typescript types)
+├── dist (or build)
+├── node_modules
+├── public
+├── test
+├── .env.development
+├── .env.production
+├── buildspec.yaml (AWS Codepipeline Spec File)
+├── README.md
+├── package.json
+├── cloudformation (AWS cloudformation files)
+└── .gitignore
+```
