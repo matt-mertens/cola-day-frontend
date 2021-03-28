@@ -1,9 +1,3 @@
-<p align="center">
-  <a href="https://matthewmertens.com" target="blank">
-    <img style="background: linear-gradient(87deg,#f5365c 0,#f56036 100%)!important; border-radius: 50%; height: 60px" src="https://matthewmertens.com/static/media/cola-logo-light.b123344a.png" alt="ColaDay Logo" />
-  </a>
-</p>
-
 # Cola Day
 
 [ColaDay](https://matthewmertens.com)   
