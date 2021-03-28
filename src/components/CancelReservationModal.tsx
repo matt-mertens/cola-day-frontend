@@ -27,7 +27,6 @@ export default function CancelReservationModal(props: any) {
     setLoading(true)
     reservationApi.reservations.deleteReservation(props.reservationId)
     .then(res => {
-        setDeleted(true)
         history.push('/reservations')
         window.location.reload()
     })
