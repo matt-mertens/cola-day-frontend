@@ -34,12 +34,13 @@
 
 ```bash
 ├── src
+│   ├── abis (Abis for deployed contracts)
 │   ├── assets (static assets)
 │   ├── components (reusable components)
 │   ├── hooks (reusable custom hooks)
 │   ├── layout (UI layout)
 │   ├── pages (App pages and specific components)
-│   ├── routes 
+│   ├── routes (page routing)
 │   ├── services (api clients)
 │   └── types (Typescript types)
 ├── dist (or build)
@@ -48,9 +49,11 @@
 ├── test
 ├── .env.development
 ├── .env.production
+├── contracts (Ethereum contracts)
+├── migrations (Ethereum contract migration files)
+├── cloudformation (AWS cloudformation files)
 ├── buildspec.yaml (AWS Codepipeline Spec File)
 ├── README.md
 ├── package.json
-├── cloudformation (AWS cloudformation files)
 └── .gitignore
 ```

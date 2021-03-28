@@ -108,8 +108,8 @@ const Main = (props: any) => {
     useEffect(() => {
       let accessToken = localStorage.getItem('accessToken')
 
-      loadWeb3()
-      loadBlockChainData()
+      // loadWeb3()
+      // loadBlockChainData()
 
       if (accessToken) {
         setLoadingAuthentication(true)
