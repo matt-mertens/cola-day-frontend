@@ -78,7 +78,7 @@ export default function Index() {
       if(selectedAppointment?.startDate && selectedAppointment?.endDate) {
         setLoading(true)
 
-        roomsApi.rooms.getAvailableRooms(moment(selectedAppointment.startDate).add(4, 'hours').format('YYYY-MM-DDTHH:mm:ss.SSS'), moment(selectedAppointment.endDate).add(4, 'hours').format('YYYY-MM-DDTHH:mm:ss'))
+        roomsApi.rooms.getAvailableRooms(moment(selectedAppointment.startDate).local().utc().format('YYYY-MM-DDTHH:mm:ss.SSS'), moment(selectedAppointment.endDate).local().utc().format('YYYY-MM-DDTHH:mm:ss'))
         .then(res => {
             let rooms = res.data.sort((a, b) => a.name - b.name)
             setRooms(rooms)
