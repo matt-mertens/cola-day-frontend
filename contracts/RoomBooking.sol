@@ -1,12 +1,15 @@
-pragma solidity ^0.5.2;
+pragma solidity ^0.6.0;
 
 contract RoomBooking {
 
     string public name;
     uint public reservationCount = 0;
     mapping(uint => Reservation) public reservations;
-
-    enum Statuses { Confirmed, Canceled }
+    
+    uint public roomCount = 0;
+    mapping(uint => Room) public rooms;
+    
+    enum Owners { coke, pepsi }
 
     struct Room {
         uint id;
@@ -15,8 +18,20 @@ contract RoomBooking {
         uint capacity;
         string floor;
         string location;
-        address owner;
+        string owner;
     }
+    
+    event RoomCreated(
+        uint id,
+        string name,
+        string description,
+        uint capacity,
+        string floor,
+        string location,
+        string owner
+    );
+    
+    enum Statuses { Confirmed, Canceled }
 
     struct Reservation {
         uint id;
@@ -59,6 +74,30 @@ contract RoomBooking {
     //     require(currentStatus == Statuses.Vacant, "Currently occupied.");
     //     _;
     // }
+    
+    function createRoom(
+        string memory _name, 
+        string memory _description,
+        string memory _owner, 
+        string memory _floor, 
+        string memory _location, 
+        uint _capacity
+    ) public {
+        // check if items exist
+        require(bytes(_name).length > 0);
+        require(bytes(_description).length > 0);
+        require(bytes(_owner).length > 0);
+        require(bytes(_floor).length > 0);
+        require(bytes(_location).length > 0);
+        require(_capacity > 0);
+
+        // increment rooms
+        roomCount ++;
+
+        rooms[roomCount] = Room(roomCount, _name, _description, _capacity, _floor, _location, _owner);
+
+        emit RoomCreated(roomCount, _name, _description, _capacity, _floor, _location, _owner);
+    }
 
     function createReservation(
         string memory _title, 
@@ -73,6 +112,7 @@ contract RoomBooking {
         require(_startDate > 0);
         require(_endDate > 0);
         require(_roomId > 0);
+        require(bytes(rooms[_roomId].name).length > 0, "Room does not exist.");
 
         // Make sure uploader address exists
         require(msg.sender!=address(0));
