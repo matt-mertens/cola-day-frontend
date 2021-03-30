@@ -41,6 +41,7 @@ const Main = (props: any) => {
     const [account, setAccount] = useState(null);
     const [network, setNetwork] = useState(null);
     const [bookingContract, setBookingContract] = useState(null);
+    const [reservations, setReservations] = useState([]);
 
     const loadWeb3 = async () =>  {
       if(typeof window.ethereum !== 'undefined') {
@@ -77,29 +78,25 @@ const Main = (props: any) => {
         network = 'goerli';
       }
       setNetwork(network)
-  
-      const roomBooking = new web3.eth.Contract(RoomBooking.abi, '0xd9145CCE52D386f254917e481eB44e9943F39138')
-      setBookingContract(roomBooking)
-  
-      if(bookingContract) {
-        const reservationsCount = await bookingContract.methods.reservationCount().call()
-        console.log(reservationsCount)
-      } else {   
-        console.log('Booking contract contract has not been deployed to the detected network')
+      
+      if (networkId === 5) {
+        const roomBooking = new web3.eth.Contract(RoomBooking.abi, RoomBooking.networks[networkId].address)
+        setBookingContract(roomBooking)
+    
+        if(roomBooking) {
+          const reservationsCount = await roomBooking.methods.reservationCount().call()
+
+          // Load reservations
+          let reservationsList = []
+          for (var i = 1; i <= reservationsCount; i++) {
+            const reservation = await roomBooking.methods.reservations(i).call()
+            reservationsList.push(reservation)
+          }
+        setReservations(reservationsList)
+        } else {   
+          console.log('Booking contract contract has not been deployed to the detected network')
+        }
       }
-  
-      //    // Load images
-      //    for (var i = 1; i <= imagesCount; i++) {
-      //     const image = await decentragram.methods.images(i).call()
-      //     this.setState({
-      //       images: [...this.state.images, image]
-      //     })
-      //   }
-      //   // Sort images. Show highest tipped images first
-      //   this.setState({
-      //     images: this.state.images.sort((a,b) => b.tipAmount - a.tipAmount )
-      //   })
-      // this.setState({loading: false})
     }
 
     const [isLoadingAuthentication, setLoadingAuthentication] = useState<boolean>(false);
