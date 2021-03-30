@@ -67,6 +67,12 @@ export default function Index() {
                     const { data } = error.response;
                     if (data.statusCode === 409) {
                         setErrorMessage(data.message)
+                    } else if (data.statusCode === 400) {
+                        if (Array.isArray(data.message)) {
+                            setErrorMessage(data.message[0]);
+                        } else {
+                            setErrorMessage(data.message);
+                        }
                     }
                 } else if (error.request) {
                 // client never received a response, or request never left
